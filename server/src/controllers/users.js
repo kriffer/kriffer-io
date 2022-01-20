@@ -6,8 +6,16 @@ const logger = require('../logger');
 
 module.exports.getUsers = async function getUsers(ctx, next) {
 	logger.debug(ctx)
-	const users = await query(`select *
-                               from user;`);
+	const users = await query(`select u.id                 as userId,
+                                      u.firstName          as firstName,
+                                      u.lastName           as lastName,
+                                      u.email              as email,
+                                      u.password           as password,
+                                      u.created            as created,
+                                      u.active             as active,
+                                      u.salt               as salt,
+                                      u.verification_token as verificationToken
+                               from user u;`);
 	if (users) {
 		ctx.body = users;
 	} else {
@@ -21,7 +29,17 @@ module.exports.getUserById = async function getUserById(ctx, next) {
 
 	const id = ctx.params.id;
 
-	const user = await query('select * from user where id = ?', id);
+	const user = await query(`select u.id                 as userId,
+                                     u.firstName          as firstName,
+                                     u.lastName           as lastName,
+                                     u.email              as email,
+                                     u.password           as password,
+                                     u.created            as created,
+                                     u.active             as active,
+                                     u.salt               as salt,
+                                     u.verification_token as verificationToken
+                              from user u
+                              where u.id = ?`, id);
 	if (user) {
 		ctx.body = user[0];
 	} else {
@@ -31,7 +49,7 @@ module.exports.getUserById = async function getUserById(ctx, next) {
 
 module.exports.findUserById = async function findUserById(id) {
 
-	const user = await  query('select * from  user where id = ?', id);
+	const user = await query('select * from  user where id = ?', id);
 	try {
 		return user[0];
 	} catch (err) {
@@ -41,9 +59,11 @@ module.exports.findUserById = async function findUserById(id) {
 
 module.exports.findUserByToken = async function findUserByToken(verificationToken) {
 
-	const user = await query('select * from  user where verification_token = ?', verificationToken);
+	const user = await query(`select *
+                              from user
+                              where verification_token = ?`, verificationToken);
 	try {
-		return user[0] ;
+		return user[0];
 	} catch (err) {
 		throw(err)
 	}
@@ -56,16 +76,16 @@ module.exports.getUserByEmail = async function getUserByEmail(email) {
 	return user;
 };
 
-module.exports.createUser = async function createUser(firstName, lastName, email, passwordHash, salt,verificationToken ) {
+module.exports.createUser = async function createUser(firstName, lastName, email, passwordHash, salt, verificationToken) {
 
 	const created = new Date();
 
-	console.log(firstName, lastName, email, passwordHash, salt,verificationToken, created);
+	console.log(firstName, lastName, email, passwordHash, salt, verificationToken, created);
 	try {
 
-		await query(`INSERT INTO user (firstName, lastName, email, password, salt, verification_token,created)
-                     VALUES (?, ?, ?, ?, ?,?, ?) `,
-			[firstName, lastName, email, passwordHash, salt, verificationToken,created]);
+		await query(`INSERT INTO user (firstName, lastName, email, password, salt, verification_token, created)
+                     VALUES (?, ?, ?, ?, ?, ?, ?) `,
+			[firstName, lastName, email, passwordHash, salt, verificationToken, created]);
 
 
 	} catch (err) {

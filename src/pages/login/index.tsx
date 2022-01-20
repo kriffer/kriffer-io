@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import {Button, Form, Grid, Header, Image, Message, Segment} from 'semantic-ui-react'
 import axios from "axios";
 
 const LoginForm = () => {
@@ -24,40 +24,38 @@ const LoginForm = () => {
     }
 
 
-    return(
-    <Grid textAlign='center' style={{height: '100vh'}} verticalAlign='middle'>
-        <Grid.Column style={{maxWidth: 450}}>
-            <Header as='h2' color='black' textAlign='center'>
-                Log-in to your account
-            </Header>
-            <Form size='large' onSubmit={submitHandler}>
-                <Segment stacked>
-                    <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' value={email}
-                                onChange={onEmailChanged}/>
-                    <Form.Input
-                        fluid
-                        icon='lock'
-                        iconPosition='left'
-                        placeholder='Password'
-                        type='password'
-                        value={password}
-                        onChange={onPasswordChanged}
-                    />
+    return (
+        <Grid textAlign='center' style={{height: '100vh'}} verticalAlign='middle'>
+            <Grid.Column style={{maxWidth: 450}}>
+                <Header as='h2' color='black' textAlign='center'>
+                    Login
+                </Header>
+                <Form size='large' onSubmit={submitHandler}>
+                    <Segment stacked>
+                        <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' value={email}
+                                    onChange={onEmailChanged}/>
+                        <Form.Input
+                            fluid
+                            icon='lock'
+                            iconPosition='left'
+                            placeholder='Password'
+                            type='password'
+                            value={password}
+                            onChange={onPasswordChanged}
+                        />
 
-                    <Button color='black' fluid size='large'>
-                        Login
-                    </Button>
-                </Segment>
-            </Form>
-            <Message>
-                New to us? <a href='#'>Sign Up</a>
-            </Message>
-        </Grid.Column>
-    </Grid>
+                        <Button color='black' fluid size='large'>
+                            Login
+                        </Button>
+                    </Segment>
+                </Form>
+
+            </Grid.Column>
+        </Grid>
     )
 
 
-    function submitHandler(event:any) {
+    function submitHandler(event: any) {
         event.preventDefault();
         if (isLoading) return;
         if (!email || !password) {
@@ -112,11 +110,11 @@ const LoginForm = () => {
     }
 
 
-    function onEmailChanged(e:any) {
+    function onEmailChanged(e: any) {
         setEmail(e.target.value)
     }
 
-    function onPasswordChanged(e:any) {
+    function onPasswordChanged(e: any) {
         setPassword(e.target.value)
     }
 }

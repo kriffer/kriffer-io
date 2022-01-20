@@ -20,7 +20,9 @@ import Projects from "../pages/projects";
 import PostsPage from "../pages/articles";
 import LoginForm from "../pages/login";
 import Register from "../pages/register";
+import PrivateRoute from "../components/private-route";
 
+const token = localStorage.getItem('token');
 
 const Main: React.FC = () => {
 
@@ -66,15 +68,17 @@ const Main: React.FC = () => {
 
                                 <TopHeader setVisibility={setVisibility} active={visible}/>
                                 <Routes>
-                                    <Route path="/login" element={<LoginForm/>}/>
-                                    <Route path="/register" element={<Register/>}/>
+
+
                                     <Route path="/" element={<PostsPage/>}/>
                                     <Route path="/posts" element={<PostsPage/>}/>
                                     <Route path="/posts/:slug" element={<Post/>}/>
                                     <Route path="/about" element={<About/>}/>
                                     <Route path="/projects" element={<Projects/>}/>
-
-                                    <Route path="/admin" element={<AdminPage/>}/>
+                                    <Route path="/login" element={<LoginForm/>}/>
+                                    <Route path="/register" element={<Register/>}/>
+                                    <Route path="/admin" element={<PrivateRoute><AdminPage/></PrivateRoute>
+                                    } />
 
                                     <Route path="/error" element={<p>Error Page!</p>}/>
                                     <Route path="*" element={<p>404 - Not Found :(</p>}/>

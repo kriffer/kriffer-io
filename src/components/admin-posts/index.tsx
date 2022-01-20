@@ -19,7 +19,11 @@ const AdminPosts: React.FC = () => {
 
 
     async function loadPosts() {
-        await fetch(`${URL}/api/v1/posts`)
+        await fetch(`${URL}/api/v1/posts`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`,
+            }
+        })
             .then(response => response.json())
             .then((res) => {
                     setPosts(res);

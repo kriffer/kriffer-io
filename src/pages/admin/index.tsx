@@ -1,15 +1,17 @@
 import React, {useState} from "react";
 import {
+    Button,
 
     Container,
     Grid,
-    GridColumn,
+    GridColumn, Icon,
 
 } from "semantic-ui-react";
 
 
 import AdminMenu from "../../components/admin-menu";
 import AdminPosts from "../../components/admin-posts";
+import AdminUsers from "../../components/admin-user";
 
 
 const AdminPage: React.FC = () => {
@@ -28,8 +30,14 @@ const AdminPage: React.FC = () => {
             case 'images':
                 return 'images';
             case 'user':
-                return 'user';
+                return <AdminUsers/>;
         }
+    }
+
+    function logout() {
+
+        localStorage.removeItem('token');
+        window.location.href = "/"
     }
 
     return (
@@ -42,6 +50,8 @@ const AdminPage: React.FC = () => {
 
             </GridColumn>
             <GridColumn width={13}>
+                <Container textAlign={"right"}> <Button className="ui button" onClick={logout}><Icon name="log out"/>Logout</Button></Container>
+
                 {renderSwitch(activeItem)}
 
             </GridColumn>
