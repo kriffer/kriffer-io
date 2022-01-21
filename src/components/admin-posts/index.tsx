@@ -42,7 +42,7 @@ const AdminPosts: React.FC = () => {
     }, []);
 
     const handlePostSelection = (e: any, data: any) => {
-        console.log(data);
+
         setP(data);
         setState('edit-post')
 

@@ -207,8 +207,6 @@ const EditPost: React.FC<EditPostProp> = ({post}) => {
             .then(response => response.json())
             .then(data => {
 
-                    console.log('created: ' + data)
-
 
                 },
                 (error) => {
@@ -229,9 +227,6 @@ const EditPost: React.FC<EditPostProp> = ({post}) => {
         fetch(`${URL}/api/v1/categories`, requestOptions)
             .then(response => response.json())
             .then(data => {
-
-                    console.log('created: ' + data)
-
 
                 },
                 (error) => {

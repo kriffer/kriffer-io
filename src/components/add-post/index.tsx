@@ -169,7 +169,7 @@ const AddPost: React.FC = () => {
             .then(response => response.json())
             .then(data => {
 
-                    console.log('created: ' + data)
+
 
 
                 },
@@ -192,7 +192,6 @@ const AddPost: React.FC = () => {
             .then(response => response.json())
             .then(data => {
 
-                    console.log('created: ' + data)
 
 
                 },

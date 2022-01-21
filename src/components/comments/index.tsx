@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import {Button, Checkbox, Comment, Divider, Form, FormGroup, Header, Input, TextArea} from 'semantic-ui-react'
-
+import {Button, Checkbox, Comment, Divider, Form, Header, Input, TextArea} from 'semantic-ui-react'
+import  './comments.css'
 
 import {CommentProp, PostProps} from "./types";
 
@@ -13,7 +13,7 @@ const Comments: React.FC<PostProps> = ({post}) => {
 
     const [comments, setComments] = useState<CommentProp[]>([]);
     const [commentContent, setCommentContent] = useState('');
-    const [commentName, setCommentName] = useState<string>('');
+    const [commentName, setCommentName] = useState<any>('');
     const [checked, setChecked] = useState(false);
     const [commentEmail, setCommentEmail] = useState('');
     const [repliedComment, setRepliedComment] = useState(0);
@@ -33,6 +33,7 @@ const Comments: React.FC<PostProps> = ({post}) => {
 
     useEffect(() => {
         getComments();
+        setCommentName(localStorage.getItem('kriffer.io-name'))
     }, [post]);
 
 
@@ -183,7 +184,7 @@ Save my name, email, and website in this browser for the next time I comment'
     return (
         <Comment.Group>
             <Header as='h3' dividing>
-                Comments
+                Comments ({comments.length})
             </Header>
 
 

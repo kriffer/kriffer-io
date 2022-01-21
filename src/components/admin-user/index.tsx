@@ -42,7 +42,7 @@ const AdminUsers: React.FC = () => {
     }, []);
 
     const handlePostSelection = (e: any, data: any) => {
-        console.log(data);
+
         setUser(data);
         setState('edit-user')
 

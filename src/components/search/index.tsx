@@ -44,7 +44,6 @@ const SearchField: React.FC = () => {
 
     const handleSearchChange = React.useCallback((e, data) => {
         clearTimeout(timeoutRef.current)
-        console.log(data)
         dispatch({type: 'START_SEARCH', query: data.value})
 
         timeoutRef.current = setTimeout(() => {
