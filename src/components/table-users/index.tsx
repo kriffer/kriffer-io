@@ -25,8 +25,9 @@ const TableUsers: React.FC<UserListProps> = ({users, onRowClick, onButtonClick})
             {users.map(user => <Table.Row key={user.userId} onClick={(e: any) => handleClick(e, user)}>
                 <Table.Cell>{user.userId}</Table.Cell>
                 <Table.Cell>{user.firstName} {user.lastName}</Table.Cell>
-
-                <Table.Cell>{user.verificationTocken}</Table.Cell>
+                <Table.Cell>{user.email} </Table.Cell>
+                <Table.Cell>{user.active===1?'enabled':'disabled'}</Table.Cell>
+                <Table.Cell>{user.verificationToken}</Table.Cell>
                 <Table.Cell>{new Date(user.created).toISOString().slice(0, 19).replace('T', ' ')}</Table.Cell>
                 <Table.Cell><Button  id="delete" className="ui button tiny red" onClick={ (event, data)=> deletePost(event,user) }>Delete</Button></Table.Cell>
             </Table.Row>)}

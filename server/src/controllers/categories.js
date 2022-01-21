@@ -4,8 +4,11 @@ const {query} = require('../data/config');
 // Get all categories
 module.exports.getCategories = async function getCategories(ctx, next) {
 	const categories = await query(`select c.id    as categoryId,
-                                           c.title as categoryTitle
-                                    from category c;  `);
+                                           c.title as categoryTitle,
+                                           p.id    as postId
+                                    from category c
+                                             join post_category pc on c.id = pc.categoryId
+                                             join post p on p.id = pc.postId;  `);
 	if (categories) {
 		ctx.body = categories;
 	} else {
@@ -17,12 +20,12 @@ module.exports.getCategories = async function getCategories(ctx, next) {
 module.exports.getCategoriesByPost = async function getCategoriesByPost(ctx, next) {
 	const id = ctx.params.id;
 	const categories = await query(`select c.id    as categoryId,
-                                     c.title as categoryTitle,
-                                     p.id    as postId
-                              from category c
-                                       join post_category pc on c.id = pc.categoryId
-                                       join post p on p.id = pc.postId
-                              where p.id = ?;`, id);
+                                           c.title as categoryTitle,
+                                           p.id    as postId
+                                    from category c
+                                             join post_category pc on c.id = pc.categoryId
+                                             join post p on p.id = pc.postId
+                                    where p.id = ?;`, id);
 	if (categories) {
 		ctx.body = categories;
 	} else {

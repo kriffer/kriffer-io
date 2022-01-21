@@ -4,10 +4,9 @@ export type CommentProp = {
     commentId: number,
     postId: number,
     createdAt: any,
-    firstName: string,
-    lastName: string,
+    name: string,
+    email:string,
     content: string,
-    userId: number,
     parentId?: number
 }
 

@@ -70,8 +70,8 @@ const Post: React.FC<PostPropObj> = () => {
 
                     let categoriesOfPost = res.filter((cat: Category) => cat.postId === id);
 
-
-                    categoriesOfPost.forEach((c: Category) => getByCategory(c.categoryId));
+                  console.log(categoriesOfPost)
+                    categoriesOfPost.map((c: Category) => getByCategory(c.categoryId));
                     setCategories(categoriesOfPost);
 
                 },

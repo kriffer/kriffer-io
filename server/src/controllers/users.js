@@ -94,12 +94,21 @@ module.exports.createUser = async function createUser(firstName, lastName, email
 };
 
 module.exports.updateUser = async function updateUser(ctx, next) {
-	logger.debug(ctx)
 	const id = ctx.params.id;
-	const {firstName, lastName, email, active, password} = ctx.request.body;
+
+	if(ctx.request.body.password){
+		const {passwordHash, salt} = await setPassword(ctx.request.body.password);
+	    ctx.request.body.password=passwordHash
+		ctx.request.body.salt = salt
+	}
+
+	const body = ctx.request.body;
+
+	console.log(body)
+
 	try {
 
-		await query('UPDATE  user SET firstName = ?,lastName = ?, email = ?, password = ?, active=? WHERE id = ?', [firstName, lastName, email, password, active, id]);
+		await query('UPDATE  user SET  ? WHERE id = ?', [body, id]);
 
 		ctx.status = 201;
 		ctx.body = `User ${id} updated`;
@@ -156,7 +165,7 @@ async function setPassword(password) {
 module.exports.setPassword = setPassword;
 
 module.exports.checkPassword = async function (user, password) {
-
+  console.log(user)
 	const id = user[0].id;
 	if (!password) return false;
 	console.log('pass', password)

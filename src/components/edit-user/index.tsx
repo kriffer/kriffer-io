@@ -38,21 +38,20 @@ const EditUser: React.FC<EditUserProp> = ({user}) => {
             })
     }
 
-
     function handleFirstNameChange(event: any) {
         setFirstName(event.target.value);
     }
 
-
-    const handleLastNameChange = (e: any, {value}: any) => {
-        setLastName(value);
+    function handleLastNameChange(e: any) {
+        setLastName(e.target.value);
     }
 
-    const handleEmailChange = (e: any, {value}: any) => {
-        setEmail(value);
+    function handleEmailChange(e: any) {
+        setEmail(e.target.value);
     }
-    const handlePasswordChange = (e: any, {value}: any) => {
-        setPassword(value);
+
+    function handlePasswordChange(e: any) {
+        setPassword(e.target.value);
     }
 
 
@@ -65,19 +64,19 @@ const EditUser: React.FC<EditUserProp> = ({user}) => {
             <Form>
                 <Form.Field>
                     <label>First name</label>
-                    <Input value={user.firstName} onChange={handleFirstNameChange}/>
+                    <Input defaultValue={user.firstName} onChange={handleFirstNameChange}/>
                 </Form.Field>
                 <Form.Field>
                     <label>Last name</label>
-                    <Input value={user.lastName} onChange={handleLastNameChange}/>
+                    <Input defaultValue={user.lastName} onChange={handleLastNameChange}/>
                 </Form.Field>
                 <Form.Field>
                     <label>Email</label>
-                    <Input value={user.email} onChange={handleEmailChange}/>
+                    <Input defaultValue={user.email} onChange={handleEmailChange}/>
                 </Form.Field>
                 <Form.Field>
                     <label>Password</label>
-                    <Input type="password" value={user.password} onChange={handlePasswordChange}/>
+                    <Input type="password" defaultValue={user.password} onChange={handlePasswordChange}/>
                 </Form.Field>
 
             </Form>

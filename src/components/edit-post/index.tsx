@@ -265,11 +265,7 @@ const EditPost: React.FC<EditPostProp> = ({post}) => {
 
 
     return (
-
-
         <Container style={{marginTop: '5em'}}>
-
-
             <Form>
                 <Form.Field>
                     <label>Summary</label>

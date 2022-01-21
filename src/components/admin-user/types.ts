@@ -7,5 +7,5 @@ export type UserProp = {
     password?: string;
     salt?: string;
     active: number;
-    verificationTocken?:string
+    verificationToken?:string
 }
