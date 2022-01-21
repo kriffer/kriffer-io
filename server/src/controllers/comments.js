@@ -3,18 +3,18 @@ const {query} = require("../data/config");
 
 module.exports.getCommentsByPost = async function getCommentsByPost(ctx, next) {
 	const id = ctx.params.id;
-	const users = await query(`select u.firstName as firstName,
-                                      u.lastName  as lastName,
+	const comments = await query(`select c.name      as name,
+                                      c.email     as email,
                                       c.id        as commentId,
                                       c.postId    as postId,
                                       c.createdAt as createdAt,
                                       c.content   as content,
                                       c.parentId     parentId
                                from post_comment c
-                                        join user u on u.id = c.userId
+                            
                                where c.postId = ?;`, id)
-	if (users) {
-		ctx.body = users;
+	if (comments) {
+		ctx.body = comments;
 	} else {
 		ctx.throw(404)
 	}

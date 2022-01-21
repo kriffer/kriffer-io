@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Button, Comment, Form, Header} from 'semantic-ui-react'
+import {Button, Checkbox, Comment, Divider, Form, FormGroup, Header, Input, TextArea} from 'semantic-ui-react'
 
 
 import {CommentProp, PostProps} from "./types";
@@ -7,13 +7,15 @@ import {CommentProp, PostProps} from "./types";
 
 const URL = process.env.REACT_APP_API_ENDPOINT;
 
+
 const Comments: React.FC<PostProps> = ({post}) => {
     // const buttonRef:any = createRef();
 
-
     const [comments, setComments] = useState<CommentProp[]>([]);
     const [commentContent, setCommentContent] = useState('');
-
+    const [commentName, setCommentName] = useState<string>('');
+    const [checked, setChecked] = useState(false);
+    const [commentEmail, setCommentEmail] = useState('');
     const [repliedComment, setRepliedComment] = useState(0);
     const [reply, setReply] = useState(false);
 
@@ -35,9 +37,12 @@ const Comments: React.FC<PostProps> = ({post}) => {
 
 
     function addComment() {
+
         let requestBody: any = {
-            userId: post.authorId,
+
             postId: post.postId,
+            name: commentName,
+            email: commentEmail,
             content: commentContent,
             createdAt: new Date().toISOString().slice(0, 19).replace('T', ' ')
         }
@@ -60,6 +65,9 @@ const Comments: React.FC<PostProps> = ({post}) => {
             .then(response => response.json())
             .then(data => {
                 getComments();
+                setCommentContent('');
+
+                setChecked(false)
             });
     }
 
@@ -70,8 +78,17 @@ const Comments: React.FC<PostProps> = ({post}) => {
 
     function handleClick(event: any) {
         event.preventDefault();
+        if (checked) {
+            localStorage.setItem('kriffer.io-name', commentName)
+            localStorage.setItem('kriffer.io-email', commentEmail)
+        }
+
+        const name: any = localStorage.getItem('kriffer.io-name')
+
+        setCommentName(name)
+
         addComment();
-        setCommentContent('');
+
 
     }
 
@@ -80,6 +97,7 @@ const Comments: React.FC<PostProps> = ({post}) => {
         setReply(false)
         setCommentContent('');
         setRepliedComment(0);
+        setChecked(false)
         setReply(false);
     }
 
@@ -87,6 +105,7 @@ const Comments: React.FC<PostProps> = ({post}) => {
         addComment();
         setCommentContent('');
         setRepliedComment(0);
+        setChecked(false)
         setReply(false);
     }
 
@@ -100,7 +119,7 @@ const Comments: React.FC<PostProps> = ({post}) => {
 
             <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/joe.jpg'/>
             <Comment.Content>
-                <Comment.Author as='a'>{comment.firstName} {comment.lastName}</Comment.Author>
+                <Comment.Author as='a'>{comment.name}</Comment.Author>
                 <Comment.Metadata>
                     <span>{new Date(comment.createdAt).toLocaleString()}</span>
                 </Comment.Metadata>
@@ -113,7 +132,27 @@ const Comments: React.FC<PostProps> = ({post}) => {
                 </Comment.Actions>
             </Comment.Content>
             {reply && repliedComment === comment.commentId ? <Form reply>
+                {!localStorage.getItem('kriffer.io-name') &&
+                !localStorage.getItem('kriffer.io-email') ? <Form.Group widths='equal' inline>
+                    <Form.Field>
+                        <label>Name</label>
+                        <Input fluid value={commentName} onChange={handleNameChange} required/>
+                    </Form.Field>
+
+                    <Form.Field>
+                        <label>Email</label>
+                        <Input fluid type="email" value={commentEmail} onChange={handleEmailChange} required/>
+                    </Form.Field>
+                </Form.Group> : ''}
+
                 <Form.TextArea value={commentContent} onChange={handleChange} required/>
+                {!localStorage.getItem('kriffer.io-name') &&
+                !localStorage.getItem('kriffer.io-email') ? <Form.Field>
+                    <Checkbox label='
+Save my name, email, and website in this browser for the next time I comment'
+                              onChange={toggle}
+                              checked={checked}/>
+                </Form.Field> : ''}
                 <Button content='Reply' labelPosition='left' icon='edit' onClick={addReply} secondary/>
                 <Button content='Cancel' labelPosition='left' icon='cancel' onClick={cancelReply}
                         basic/>
@@ -128,6 +167,19 @@ const Comments: React.FC<PostProps> = ({post}) => {
     }
 
 
+    function handleNameChange(event: any) {
+        setCommentName(event.target.value);
+    }
+
+    function handleEmailChange(event: any) {
+        setCommentEmail(event.target.value);
+    }
+
+    function toggle(event: any) {
+        setChecked(!checked);
+    }
+
+
     return (
         <Comment.Group>
             <Header as='h3' dividing>
@@ -135,7 +187,7 @@ const Comments: React.FC<PostProps> = ({post}) => {
             </Header>
 
 
-            {comments.filter(c=> c.parentId===null).map(comment =>
+            {comments.filter(c => c.parentId === null).map(comment =>
                 getSubcomments(comment.commentId).length > 0 ?
                     renderData(comment, getSubcomments(comment.commentId))
                     :
@@ -143,8 +195,31 @@ const Comments: React.FC<PostProps> = ({post}) => {
             )}
 
             {!reply ?
+
                 <Form reply onSubmit={handleClick}>
-                    <Form.TextArea value={commentContent} onChange={handleChange} required/>
+                    <Divider/>
+                    {!localStorage.getItem('kriffer.io-name') &&
+                    !localStorage.getItem('kriffer.io-email') ? <Form.Group widths='equal' inline>
+                        <Form.Field>
+                            <label>Name</label>
+                            <Input fluid value={commentName} onChange={handleNameChange} required/>
+                        </Form.Field>
+
+                        <Form.Field>
+                            <label>Email</label>
+                            <Input fluid type="email" value={commentEmail} onChange={handleEmailChange} required/>
+                        </Form.Field>
+                    </Form.Group> : ''}
+                    <Form.Field>
+                        <TextArea value={commentContent} onChange={handleChange} rows={2} required/>
+                    </Form.Field>
+                    {!localStorage.getItem('kriffer.io-name') &&
+                    !localStorage.getItem('kriffer.io-email') ? <Form.Field>
+                        <Checkbox label='
+Save my name, email, and website in this browser for the next time I comment'
+                                  onChange={toggle}
+                                  checked={checked}/>
+                    </Form.Field> : ''}
                     <Button content='Add comment' labelPosition='left' icon='edit' secondary/>
                 </Form> : ''}
         </Comment.Group>
