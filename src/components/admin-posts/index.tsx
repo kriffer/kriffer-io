@@ -51,11 +51,11 @@ const AdminPosts: React.FC = () => {
     function deletePost(e: any, post: PostProp) {
         e.stopPropagation();
 
-        fetch(`${URL}/api/v1/tagsposts/post/${post.postId}`, {method: 'DELETE'})
+        fetch(`${URL}/api/v1/tagsposts/post/${post.postId}`, {method: 'DELETE', headers:{'Authorization': `Bearer ${localStorage.token}`}})
             .then(() => {
-                    fetch(`${URL}/api/v1/categoriesposts/post/${post.postId}`, {method: 'DELETE'})
+                    fetch(`${URL}/api/v1/categoriesposts/post/${post.postId}`, {method: 'DELETE',headers:{'Authorization': `Bearer ${localStorage.token}`}})
                         .then(() => {
-                            fetch(`${URL}/api/v1/posts/${post.postId}`, {method: 'DELETE'})
+                            fetch(`${URL}/api/v1/posts/${post.postId}`, {method: 'DELETE',headers:{'Authorization': `Bearer ${localStorage.token}`}})
                                 .then(() => {
                                         loadPosts()
                                     },

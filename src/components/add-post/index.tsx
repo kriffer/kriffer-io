@@ -73,7 +73,7 @@ const AddPost: React.FC = () => {
 
         const requestOptions = {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json','Authorization': `Bearer ${localStorage.token}`},
             body: JSON.stringify({
                 authorId: 1,
                 summary: summary,
@@ -82,7 +82,7 @@ const AddPost: React.FC = () => {
                 createdAt: new Date().toISOString().slice(0, 19).replace('T', ' ')
             })
         };
-        fetch('${URL}/api/v1/posts', requestOptions)
+        fetch(`${URL}/api/v1/posts`, requestOptions)
             .then(response => response.json()).then((res) => {
             assignTagsToPost(res.id);
             assignCategoriesToPost(res.id)
@@ -100,7 +100,7 @@ const AddPost: React.FC = () => {
                     if (currentTagValues.includes(t.tagTitle)) {
                         const requestOptions = {
                             method: 'POST',
-                            headers: {'Content-Type': 'application/json'},
+                            headers: {'Content-Type': 'application/json','Authorization': `Bearer ${localStorage.token}`,},
                             body: JSON.stringify({
 
                                 postId: postId,
@@ -135,7 +135,7 @@ const AddPost: React.FC = () => {
 
                         const requestOptions = {
                             method: 'POST',
-                            headers: {'Content-Type': 'application/json'},
+                            headers: {'Content-Type': 'application/json','Authorization': `Bearer ${localStorage.token}`,},
                             body: JSON.stringify({
 
                                 postId: postId,
@@ -158,7 +158,7 @@ const AddPost: React.FC = () => {
 
         const requestOptions = {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json','Authorization': `Bearer ${localStorage.token}`},
             body: JSON.stringify({
 
                 title: title,
@@ -181,7 +181,7 @@ const AddPost: React.FC = () => {
     function createCategory(title: any) {
         const requestOptions = {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json','Authorization': `Bearer ${localStorage.token}`},
             body: JSON.stringify({
 
                 title: title,

@@ -10,6 +10,7 @@
     "koa-bodyparser": "^4.3.0",
     "koa-passport": "^4.1.4",
     "koa-router": "^10.0.0",
+    "mariadb": "^2.5.5",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
     "passport-local": "^1.0.0",

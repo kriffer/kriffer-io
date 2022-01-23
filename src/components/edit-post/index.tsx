@@ -105,7 +105,7 @@ const EditPost: React.FC<EditPostProp> = ({post}) => {
     function savePost() {
         const requestOptions = {
             method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json','Authorization': `Bearer ${localStorage.token}`,},
             body: JSON.stringify({
                 summary: summary,
                 slug: summary.toLowerCase().replaceAll(' ', '-'),
@@ -133,7 +133,7 @@ const EditPost: React.FC<EditPostProp> = ({post}) => {
                     if (currentTagValues.includes(t.tagTitle)) {
                         const requestOptions = {
                             method: 'POST',
-                            headers: {'Content-Type': 'application/json'},
+                            headers: {'Content-Type': 'application/json','Authorization': `Bearer ${localStorage.token}`,},
                             body: JSON.stringify({
 
                                 postId: post.postId,
@@ -145,7 +145,7 @@ const EditPost: React.FC<EditPostProp> = ({post}) => {
                         return fetch(`${URL}/api/v1/tagsposts`, requestOptions)
 
                     } else {
-                        return fetch(`${URL}/api/v1/tagsposts/post/${post.postId}/tag/${t.tagId}`, {method: 'DELETE'})
+                        return fetch(`${URL}/api/v1/tagsposts/post/${post.postId}/tag/${t.tagId}`, {method: 'DELETE',headers:{'Authorization': `Bearer ${localStorage.token}`}})
                     }
 
                 })
@@ -170,7 +170,7 @@ const EditPost: React.FC<EditPostProp> = ({post}) => {
 
                         const requestOptions = {
                             method: 'POST',
-                            headers: {'Content-Type': 'application/json'},
+                            headers: {'Content-Type': 'application/json','Authorization': `Bearer ${localStorage.token}`,},
                             body: JSON.stringify({
 
                                 postId: post.postId,
@@ -182,7 +182,7 @@ const EditPost: React.FC<EditPostProp> = ({post}) => {
                         return fetch(`${URL}/api/v1/categoriesposts`, requestOptions)
 
                     } else {
-                        return fetch(`${URL}/api/v1/categoriesposts/post/${post.postId}/category/${t.categoryId}`, {method: 'DELETE'})
+                        return fetch(`${URL}/api/v1/categoriesposts/post/${post.postId}/category/${t.categoryId}`, {method: 'DELETE',headers:{'Authorization': `Bearer ${localStorage.token}`}})
                     }
 
                 })
@@ -196,7 +196,7 @@ const EditPost: React.FC<EditPostProp> = ({post}) => {
 
         const requestOptions = {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json','Authorization': `Bearer ${localStorage.token}`,},
             body: JSON.stringify({
 
                 title: title,
@@ -217,7 +217,7 @@ const EditPost: React.FC<EditPostProp> = ({post}) => {
     function createCategory(title: any) {
         const requestOptions = {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json','Authorization': `Bearer ${localStorage.token}`,},
             body: JSON.stringify({
 
                 title: title,

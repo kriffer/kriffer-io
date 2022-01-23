@@ -168,7 +168,7 @@ module.exports.checkPassword = async function (user, password) {
   console.log(user)
 	const id = user[0].id;
 	if (!password) return false;
-	console.log('pass', password)
+
 	const res = await query('select password, salt from user  WHERE id = ?', id);
 
 	const hash = await generatePassword(res[0].salt, password);

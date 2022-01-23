@@ -3,7 +3,7 @@ import {Button, Checkbox, Comment, Divider, Form, Header, Input, TextArea} from 
 import  './comments.css'
 
 import {CommentProp, PostProps} from "./types";
-
+import avatar from './avatar.png'
 
 const URL = process.env.REACT_APP_API_ENDPOINT;
 
@@ -118,7 +118,7 @@ const Comments: React.FC<PostProps> = ({post}) => {
 
         return <Comment>
 
-            <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/joe.jpg'/>
+            <Comment.Avatar as='a' src={avatar} size={'small'}/>
             <Comment.Content>
                 <Comment.Author as='a'>{comment.name}</Comment.Author>
                 <Comment.Metadata>

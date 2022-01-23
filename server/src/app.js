@@ -117,21 +117,21 @@ router.delete('/users/:id', mustBeAuthenticated, deleteUser);
 
 router.get('/categories', getCategories)
 router.get('/categories/post/:id', getCategoriesByPost)
-router.post('/categories', createCategory)
-router.post('/categoriesposts', createCategoriesPosts)
-router.delete('/categoriesposts/post/:id', deleteCategoriesPostsByPost)
-router.delete('/categoriesposts/post/:postId/category/:categoryId', deleteCategoriesPostsByPostByCategory)
+router.post('/categories', mustBeAuthenticated,createCategory)
+router.post('/categoriesposts', mustBeAuthenticated,createCategoriesPosts)
+router.delete('/categoriesposts/post/:id', mustBeAuthenticated,deleteCategoriesPostsByPost)
+router.delete('/categoriesposts/post/:postId/category/:categoryId', mustBeAuthenticated,deleteCategoriesPostsByPostByCategory)
 
 router.get('/comments/post/:id', getCommentsByPost)
 router.post('/comments', createComment)
 
 router.get('/tags', getTags)
 router.get('/tags/post/:id', getTagsByPost)
-router.post('/tags', createTag)
-router.post('/tagsposts', createTagsPosts)
+router.post('/tags',mustBeAuthenticated, createTag)
+router.post('/tagsposts', mustBeAuthenticated,createTagsPosts)
 
-router.delete('/tagsposts/post/:postId/tag/:tagId', deleteTagsPosts)
-router.delete('/tagsposts/post/:id', deleteTagsPostsByPost)
+router.delete('/tagsposts/post/:postId/tag/:tagId', mustBeAuthenticated,deleteTagsPosts)
+router.delete('/tagsposts/post/:id', mustBeAuthenticated,deleteTagsPostsByPost)
 
 
 router.get('/posts', getPosts)
@@ -139,9 +139,9 @@ router.get('/posts/category/:id', getPostsByCategory)
 router.get('/posts/tag/:id', getPostsByTag)
 router.get('/posts/:id', getPostById)
 router.get('/posts/slug/:slug', getPostBySlug)
-router.post('/posts', createPost)
-router.put('/posts/:id', updatePost)
-router.delete('/posts/:id', deletePost)
+router.post('/posts', mustBeAuthenticated,createPost)
+router.put('/posts/:id',mustBeAuthenticated, updatePost)
+router.delete('/posts/:id',mustBeAuthenticated, deletePost)
 
 
 app.use(router.routes());
