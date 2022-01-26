@@ -131,7 +131,7 @@ const Post: React.FC<PostPropObj> = () => {
             <GridColumn width={3}/>
             <GridColumn width={10}>
 
-                <Container text style={{marginTop: '5em'}}>
+                <Container text style={{marginTop: '4em'}}>
                     <Breadcrumb>
                         <Breadcrumb.Section href='/posts' size={'large'}>All posts</Breadcrumb.Section>
                         <Breadcrumb.Divider/>

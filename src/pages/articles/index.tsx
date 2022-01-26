@@ -97,11 +97,11 @@ const PostsPage: React.FC = () => {
     }
 
     return (
-        <Grid stackable reversed={'mobile'} columns={3}>
+        <Grid stackable  columns={3}>
             <GridColumn width={3}/>
             <GridColumn width={10}>
 
-                <Container text style={{marginTop: '5em'}}>
+                <Container text style={{marginTop: '4em'}}>
                     {!isAllPosts ?
                         <Breadcrumb id="all-posts-bread">
                             <Breadcrumb.Section href='/posts'>All posts</Breadcrumb.Section>
@@ -111,7 +111,7 @@ const PostsPage: React.FC = () => {
                 </Container>
             </GridColumn>
             <GridColumn textAlign={"left"} width={3}>
-                <Container fluid text style={{marginTop: '6em'}}>
+                <Container fluid text style={{marginTop: '5em'}}>
 
                     <Header>Categories</Header>
                     <Menu secondary vertical fluid>
