@@ -13,7 +13,7 @@ import TopHeader from '../components/header'
 
 
 import About from "../components/about";
-import {Route, Routes} from "react-router-dom";
+import {Link, Route, Routes} from "react-router-dom";
 import Post from "../components/post";
 import AdminPage from "../pages/admin";
 import Projects from "../pages/projects";
@@ -49,18 +49,27 @@ const Main: React.FC = () => {
                             visible={visible}
                             width='thin'
                         >
-                            <Menu.Item href='/posts' as='a'>
-                                <Icon name='newspaper'/>
-                                Articles
-                            </Menu.Item>
-                            <Menu.Item href='/projects' as='a'>
-                                <Icon name='code'/>
-                                Projects
-                            </Menu.Item>
-                            <Menu.Item href='/about' as='a'>
-                                <Icon name='info'/>
-                                About
-                            </Menu.Item>
+
+                            <Link to={'/posts'}>
+                                <Menu.Item as='a' onClick={()=>setVisible(false)}>
+                                    <Icon name='newspaper'/>
+                                    Articles
+                                </Menu.Item>
+                            </Link>
+
+                            <Link to={'/projects'}>
+                                <Menu.Item onClick={()=>setVisible(false)}>
+                                    <Icon name='code'/>
+                                    Projects
+                                </Menu.Item>
+                            </Link>
+
+                            <Link to={'/about'}>
+                                <Menu.Item onClick={()=>setVisible(false)}>
+                                    <Icon name='info'/>
+                                    About
+                                </Menu.Item>
+                            </Link>
                         </Sidebar>
                         <Sidebar.Pusher dimmed={visible}>
 
@@ -71,14 +80,14 @@ const Main: React.FC = () => {
 
 
                                     <Route path="/" element={<PostsPage/>}/>
-                                    <Route path="/posts" element={<PostsPage/>}/>
-                                    <Route path="/posts/:slug" element={<Post/>}/>
+                                    <Route path="/posts" element={<PostsPage/>} />
+                                    <Route path="/posts/:slug" element={<Post/>} />
                                     <Route path="/about" element={<About/>}/>
                                     <Route path="/projects" element={<Projects/>}/>
                                     <Route path="/login" element={<LoginForm/>}/>
                                     <Route path="/register" element={<Register/>}/>
                                     <Route path="/admin" element={<PrivateRoute><AdminPage/></PrivateRoute>
-                                    } />
+                                    }/>
 
                                     <Route path="/error" element={<p>Error Page!</p>}/>
                                     <Route path="*" element={<p>404 - Not Found :(</p>}/>
@@ -88,10 +97,11 @@ const Main: React.FC = () => {
                                     <Container textAlign='center'>
 
                                         <List horizontal inverted divided link size='small'>
-
-                                            <List.Item as='a' href='/about'>
-                                                © {new Date().getFullYear()} kriffer.io
-                                            </List.Item>
+                                            <Link to={'/about'}>
+                                                <List.Item as='a'>
+                                                    © {new Date().getFullYear()} kriffer.io
+                                                </List.Item>
+                                            </Link>
                                         </List>
                                     </Container>
                                 </Segment>

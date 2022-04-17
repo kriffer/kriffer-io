@@ -4,6 +4,7 @@ import PostList from "../../components/post-list";
 import {Category, Tag} from '../../layout/types'
 import './post-list.css';
 import {PostProp} from "../../components/post/types";
+import {Link, useLocation} from "react-router-dom";
 
 
 const URL = process.env.REACT_APP_API_ENDPOINT;
@@ -12,7 +13,10 @@ const PostsPage: React.FC = () => {
     const [p, setP] = useState<PostProp[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [tags, setTags] = useState<Tag[]>([]);
-    const [isAllPosts, setIsAllPosts] = useState<boolean>(false);
+    const [isAllPosts, setIsAllPosts] = useState<boolean>(true);
+
+
+    let location = useLocation();
 
     async function loadPosts() {
         await fetch(`${URL}/api/v1/posts`)
@@ -58,7 +62,7 @@ const PostsPage: React.FC = () => {
         loadTags();
 
 
-    }, []);
+    }, [location]);
 
     function getByCategory(id: number) {
         fetch(`${URL}/api/v1/posts/category/${id}`)
@@ -104,7 +108,7 @@ const PostsPage: React.FC = () => {
                 <Container text style={{marginTop: '4em'}}>
                     {!isAllPosts ?
                         <Breadcrumb id="all-posts-bread">
-                            <Breadcrumb.Section href='/posts'>All posts</Breadcrumb.Section>
+                            <Breadcrumb.Section><Link to='/posts' >All posts</Link></Breadcrumb.Section>
                             <Breadcrumb.Divider/>
                         </Breadcrumb> : ''}
                     <PostList posts={p}/>

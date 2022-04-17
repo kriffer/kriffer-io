@@ -198,7 +198,7 @@ Save my name, email, and website in this browser for the next time I comment'
             {!reply ?
 
                 <Form reply onSubmit={handleClick}>
-                    <Divider/>
+
                     {!localStorage.getItem('kriffer.io-name') &&
                     !localStorage.getItem('kriffer.io-email') ? <Form.Group widths='equal' inline>
                         <Form.Field>

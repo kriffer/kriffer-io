@@ -1,21 +1,15 @@
 import React from 'react';
 
 import Main from "./layout";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import LoginForm from "./pages/login";
-import Register from "./pages/register";
+import {BrowserRouter} from "react-router-dom";
+
 
 
 const App: React.FC = () => {
       return (
         <div className="App">
-
             <BrowserRouter>
-
-
-
                     <Main/>
-
             </BrowserRouter>
         </div>
     );

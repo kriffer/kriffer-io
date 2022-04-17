@@ -12,9 +12,11 @@ import {
 import {useParams} from "react-router";
 import {PostProp} from "./types";
 import MDEditor from '@uiw/react-md-editor';
-import './post.css';
+import '../post-footer/post.css';
 import {Category, Tag} from "../../layout/types";
-import Comments from "../comments";
+
+import {Link, useNavigate} from "react-router-dom";
+import PostFooter from "../post-footer";
 
 
 export type PostPropObj = {
@@ -27,11 +29,15 @@ const URL = process.env.REACT_APP_API_ENDPOINT;
 const Post: React.FC<PostPropObj> = () => {
     const [posts, setPosts] = useState<PostProp[]>([]);
 
+    const navigate = useNavigate()
     const [p, setP] = useState<PostProp>({} as PostProp);
     const [nextPost, setNextPost] = useState<PostProp>({} as PostProp);
     const [prevPost, setPrevPost] = useState<PostProp>({} as PostProp);
     const [categories, setCategories] = useState<Category[]>([]);
     const [tags, setTags] = useState<Tag[]>([]);
+
+    // const [{slug}, setSlug] = useState(useParams());
+
 
     let {slug} = useParams()
 
@@ -108,7 +114,7 @@ const Post: React.FC<PostPropObj> = () => {
     useEffect(() => {
         loadPostBySlug();
 
-    }, []);
+    }, [slug]);
 
 
     async function getNextPost(val: number) {
@@ -121,10 +127,6 @@ const Post: React.FC<PostPropObj> = () => {
         setPrevPost(await loadPostById(val));
     }
 
-    function handleClick(slug: string) {
-        window.location.href = `/posts/${slug}`;
-    }
-
 
     return (
         <Grid stackable reversed={'mobile'} columns={3}>
@@ -133,7 +135,7 @@ const Post: React.FC<PostPropObj> = () => {
 
                 <Container text style={{marginTop: '4em'}}>
                     <Breadcrumb>
-                        <Breadcrumb.Section href='/posts' size={'large'}>All posts</Breadcrumb.Section>
+                        <Breadcrumb.Section size={'large'}><Link to={'/posts'}> All posts</Link></Breadcrumb.Section>
                         <Breadcrumb.Divider/>
                     </Breadcrumb>
 
@@ -144,7 +146,7 @@ const Post: React.FC<PostPropObj> = () => {
                         <div>
                             {[...tags].sort().map(tag =>
                                 <Label
-                                    size={'tiny'} key={tag.tagId}><a href={'/posts'}>{tag.tagTitle}</a></Label>
+                                    size={'tiny'} key={tag.tagId}><Link to={'/posts'}>{tag.tagTitle}</Link></Label>
                             )}
                         </div>
                     </p>
@@ -170,48 +172,11 @@ const Post: React.FC<PostPropObj> = () => {
                         </Menu>
                     </Container>
 
-                    <Divider/>
-                    <Grid stackable columns={2}>
-                        <Grid.Column textAlign={"left"}>
-
-                            {prevPost ?
-                                <a href={`/posts/${prevPost.slug}`} id="heighbour-posts"> <Icon
-                                    name='backward'/>{prevPost.summary ? prevPost.summary.substring(0, 40).concat('...') : ''}
-                                </a> : ''}
-
-                        </Grid.Column>
-                        <Grid.Column textAlign={"right"}>
-
-                            {nextPost ?
-                                <a href={`/posts/${nextPost.slug}`}
-                                   id="heighbour-posts"> {nextPost.summary ? nextPost.summary.substring(0, 40).concat('...') : ''}
-                                    <Icon name='forward'/></a> : ''}
-
-                        </Grid.Column>
-                    </Grid>
-
-
                 </Container>
 
-                <Container text style={{marginTop: '2em'}}>
-                    <Comments post={p}/>
-                </Container>
+                <PostFooter prevPost={prevPost} nextPost={nextPost} posts={posts} p={p}/>
 
-                {posts.length > 0 ?
-                    <Container text style={{marginTop: '2em'}}>
-                        <Divider/>
-                        <Header textAlign={"center"} style={{fontWeight: '200'}}>
-                            Other articles of this category:
-                        </Header>
-                        <Menu secondary vertical fluid>
-                            {posts.map(post => (post.postId !== p.postId ?
-                                    <Menu.Item key={post.postId} onClick={() => handleClick(post.slug)}>
-                                        <Header><span>{new Date(p.createdAt).toLocaleDateString()} - </span> {post.summary}
-                                        </Header>
-                                    </Menu.Item> : ''
-                            ))}
-                        </Menu>
-                    </Container> : ''}
+
             </GridColumn>
             <GridColumn width={3}>
 
